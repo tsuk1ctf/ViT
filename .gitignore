@@ -1,0 +1,5 @@
+vit-base-patch16-224-in21k/
+*.h5
+*.bin
+*.msgpack
+*.safetensors
