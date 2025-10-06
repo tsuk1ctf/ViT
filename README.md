@@ -117,17 +117,3 @@ output_folder = "./output"   # 输出文件夹
 
 本项目基于 MIT 协议开源,详见 [LICENSE](LICENSE) 文件。
 
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request!
-
-## 📧 联系方式
-
-- GitHub: [@tsuk1ctf](https://github.com/tsuk1ctf)
-- 项目链接: [https://github.com/tsuk1ctf/ViT](https://github.com/tsuk1ctf/ViT)
-
-## 🙏 致谢
-
-- [Hugging Face Transformers](https://huggingface.co/transformers/)
-- [LoLI-Street Dataset](https://github.com/flyywh/CVPR-2020-Semi-Low-Light)
-- Vision Transformer 原始论文
