@@ -97,23 +97,25 @@ output_folder = "./output"   # 输出文件夹
 
 ```
 .
-├── config.py         # 配置文件
-├── model.py          # DarkEnhancer 模型定义
-├── dataset.py        # CustomLowLightDataset 数据加载器
-├── utils.py          # LossCalculator 复合损失函数
-├── train.py          # 训练脚本
-├── infer2.py         # 推理脚本
-├── data/             # 数据集目录
+├── config.py                      # 配置文件
+├── model.py                       # DarkEnhancer 模型定义
+├── dataset.py                     # CustomLowLightDataset 数据加载器
+├── utils.py                       # LossCalculator 复合损失函数
+├── train.py                       # 训练脚本
+├── infer2.py                      # 推理脚本
+├── vit-base-patch16-224-in21k/   # ViT 预训练模型目录
+├── data/                          # 数据集目录
 │   └── LOL_dataset/
 │       ├── train/
 │       └── val/
-├── checkpoints/      # 模型检查点
-├── runs/             # TensorBoard 日志
-├── test/             # 测试图像输入
-└── output/           # 增强结果输出
+├── checkpoints/                   # 模型检查点
+├── runs/                          # TensorBoard 日志
+├── test/                          # 测试图像输入
+└── output/                        # 增强结果输出
 ```
+
+**说明**: 预训练模型 `vit-base-patch16-224-in21k` 需从 [Hugging Face](https://huggingface.co/google/vit-base-patch16-224-in21k) 下载并放置在项目根目录,或首次运行时会自动下载。
 
 ## 📄 License
 
 本项目基于 MIT 协议开源,详见 [LICENSE](LICENSE) 文件。
-
