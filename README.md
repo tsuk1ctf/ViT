@@ -1,121 +1,152 @@
-# 基于 ViT 的低光照图像增强
+# Low-Light Image Enhancement Based on Vision Transformer
 
-> Low-Light Image Enhancement Based on Vision Transformer
+> A deep learning project for low-light image enhancement using Vision Transformer (ViT) with global attention mechanism, combined with mask decoder and enhancement network.
 
-## 📝 项目简介
+## Project Overview
 
-基于 Vision Transformer (ViT) 的低光照图像增强深度学习项目。利用 ViT 的全局注意力机制,结合掩码解码器和增强网络,实现智能图像增强。
+This project implements a low-light image enhancement technique based on Vision Transformer (ViT). By leveraging ViT's global attention mechanism combined with a mask decoder and enhancement network, we achieve intelligent image enhancement for low-light conditions.
 
-### 核心特性
+### Core Features
 
-- **ViT 特征提取**: 冻结的预训练 ViT-Base 模型提取全局特征
-- **掩码解码器**: 自动定位图像暗区,生成注意力掩码
-- **增强网络**: 基于掩码的卷积网络,提升亮度同时保留细节
-- **复合损失函数**: L1 损失 + VGG16 感知损失 + 暗区强化损失
+- **ViT Feature Extraction**: Frozen pre-trained ViT-Base model for global feature extraction
+- **Mask Decoder**: Automatically locates dark regions in images and generates attention masks
+- **Enhancement Network**: Mask-based convolutional network that improves brightness while preserving details
+- **Composite Loss Function**: L1 loss + VGG16 perceptual loss + dark region enhancement loss
 
-## 🏗️ 模型架构
+## Model Architecture
 
 ```
-输入图像 (224×224)
+Input Image (224×224)
     ↓
-ViT-Base 特征提取 [冻结]
+ViT-Base Feature Extraction [Frozen]
     ↓
-掩码解码器 → 注意力掩码
+Mask Decoder → Attention Mask
     ↓
-RGB + 掩码 → 增强网络
+RGB + Mask → Enhancement Network
     ↓
-增强图像输出
+Enhanced Image Output
 ```
 
-## 📦 环境依赖
+## Dataset
+
+This study uses the **[LoLI-Street dataset](https://arxiv.org/abs/2410.09831)** for training and evaluation:
+
+- **Training set**: 30,000 image pairs (low-light and normal-light)
+- **Validation set**: 3,000 image pairs
+- **Test set**: 10,000 image pairs
+
+For computational efficiency and experimental practicality, this research:
+
+- Uses the complete training set for model training
+- Randomly selects 200 image pairs from the validation set for model validation
+- Further selects 200 image pairs as the final test set
+
+## Environment Dependencies
 
 ```bash
-# 核心依赖
+# Core dependencies
 pip install torch torchvision transformers opencv-python albumentations tensorboard
 ```
 
-**主要库**:
+**Main libraries**:
+
 - PyTorch >= 1.9
 - Transformers (Hugging Face)
 - OpenCV
-- Albumentations (数据增强)
-- TensorBoard (训练可视化)
+- Albumentations (data augmentation)
+- TensorBoard (training visualization)
 
-## 🚀 快速开始
+## Quick Start
 
-### 1. 数据准备
+### 1. Data Preparation
 
-按以下结构组织数据集:
+Organize the dataset in the following structure:
 
 ```
 data/LOL_dataset/
 ├── train/
-│   ├── low/    # 低光图像
-│   └── high/   # 正常光图像
+│   ├── low/    # Low-light images
+│   └── high/   # Normal-light images
 └── val/
     ├── low/
     └── high/
 ```
 
-### 2. 配置参数
+### 2. Configuration Parameters
 
-编辑 `config.py` 调整训练参数:
+Edit `config.py` to adjust training parameters:
 
 ```python
 class Config:
-    data_root = "./data/LOL_dataset"  # 数据集路径
-    input_size = 224                  # 输入尺寸
-    batch_size = 8                    # 批次大小
-    epochs = 100                      # 训练轮数
-    lr = 1e-4                        # 学习率
+    data_root = "./data/LOL_dataset"  # Dataset path
+    input_size = 224                  # Input size
+    batch_size = 8                    # Batch size
+    epochs = 100                      # Training epochs
+    lr = 1e-4                        # Learning rate
 ```
 
-### 3. 训练模型
+### 3. Model Training
 
 ```bash
 python train.py
 
-# 查看训练日志
+# View training logs
 tensorboard --logdir=./runs
 ```
 
-### 4. 推理增强
+### 4. Inference Enhancement
 
 ```bash
 python infer2.py
 ```
 
-修改 `infer2.py` 中的路径参数:
+Modify path parameters in `infer2.py`:
+
 ```python
-input_folder = "./test"      # 输入文件夹
-output_folder = "./output"   # 输出文件夹
+input_folder = "./test"      # Input folder
+output_folder = "./output"   # Output folder
 ```
 
-支持格式: `.jpg`, `.jpeg`, `.png`, `.bmp`
+Supported formats: `.jpg`, `.jpeg`, `.png`, `.bmp`
 
-## 📁 项目结构
+## Project Structure
 
 ```
 .
-├── config.py                      # 配置文件
-├── model.py                       # DarkEnhancer 模型定义
-├── dataset.py                     # CustomLowLightDataset 数据加载器
-├── utils.py                       # LossCalculator 复合损失函数
-├── train.py                       # 训练脚本
-├── infer2.py                      # 推理脚本
-├── vit-base-patch16-224-in21k/   # ViT 预训练模型目录
-├── data/                          # 数据集目录
+├── config.py                      # Configuration file
+├── model.py                       # DarkEnhancer model definition
+├── dataset.py                     # CustomLowLightDataset data loader
+├── utils.py                       # LossCalculator composite loss function
+├── train.py                       # Training script
+├── infer2.py                      # Inference script
+├── vit-base-patch16-224-in21k/   # ViT pre-trained model directory
+├── data/                          # Dataset directory
 │   └── LOL_dataset/
 │       ├── train/
 │       └── val/
-├── checkpoints/                   # 模型检查点
-├── runs/                          # TensorBoard 日志
-├── test/                          # 测试图像输入
-└── output/                        # 增强结果输出
+├── checkpoints/                   # Model checkpoints
+├── runs/                          # TensorBoard logs
+├── test/                          # Test image input
+└── output/                        # Enhanced result output
 ```
 
-**说明**: 预训练模型 `vit-base-patch16-224-in21k` 需从 [Hugging Face](https://huggingface.co/google/vit-base-patch16-224-in21k) 下载并放置在项目根目录,或首次运行时会自动下载。
+**Note**: The pre-trained model `vit-base-patch16-224-in21k` needs to be downloaded from [Hugging Face](https://huggingface.co/google/vit-base-patch16-224-in21k) and placed in the project root directory, or it will be automatically downloaded on first run.
 
-## 📄 License
+## Experimental Results
 
-本项目基于 MIT 协议开源,详见 [LICENSE](LICENSE) 文件。
+| Method         | NIQE ↓   | PSNR ↑    | SSIM ↑   | LPIPS ↓  |
+| -------------- | -------- | --------- | -------- | -------- |
+| **ViT (Ours)** | **3.36** | **26.64** | **0.82** | **0.17** |
+
+## License
+
+This project is open source under the MIT License. See [LICENSE](LICENSE) file for details.
+
+## Evaluation Metrics
+
+- **NIQE** (Natural Image Quality Evaluator): Lower is better, measures deviation from natural image statistics
+- **PSNR** (Peak Signal-to-Noise Ratio): Higher is better, measures signal quality vs noise
+- **SSIM** (Structural Similarity Index): Higher is better (closer to 1), measures structural similarity
+- **LPIPS** (Learned Perceptual Image Patch Similarity): Lower is better, measures perceptual similarity
+- **BRISQUE**: Lower is better, blind/referenceless image spatial quality evaluator
+- **PIQE**: Lower is better, perception-based image quality evaluator
