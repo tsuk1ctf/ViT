@@ -1,0 +1,52 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ===== 模型权重 / 检查点(占位目录靠 .gitkeep 保留,真正的权重不入库)=====
+*.pth
+*.pt
+*.bin
+*.ckpt
+*.safetensors
+
+# ===== 数据集图像(可能未来放入 data/、test/ 里的图,默认全忽略)=====
+# 如果某些示例图想入库,在仓库里手动 git add -f path/to/img.png 即可
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tif
+*.tiff
+
+# ===== 评估脚本输出 / 日志 =====
+results_*.csv
+*.log
+
+# ===== 虚拟环境 =====
+venv/
+env/
+.venv/
+ENV/
+
+# ===== IDE / 系统 =====
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ===== 临时文件 =====
+*.tmp
+*.bak
+
+# ===== 私材料(论文原稿 / 审稿意见 / rebuttal 草稿,不公开)=====
+*.pdf
+*.docx
+~$*
+审稿人/
+
+# ===== 例外:.gitkeep 永远保留(用于占位空目录)=====
+!.gitkeep
